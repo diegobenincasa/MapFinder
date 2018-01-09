@@ -1,0 +1,40 @@
+; the next section is mandatory
+[general]
+; start of mandatory metadata
+name=MapFinder Brasil
+qgisMinimumVersion=2.0
+description=
+	Find the topographical chart that covers a defined area or a selected feature.
+about=
+	Encontre a carta topográfica (índice de nomenclatura e mapa índice para
+	o Brasil) que contempla a área definida ou a geometria selecionada.
+	Somente as cartas que cobrem o Brasil são possíveis de serem determina-
+	das com este plugin. As cartas fora do território brasileiro são agru-
+	padas em uma categoria separada.
+
+	Find the topographical chart (nomenclature index and index map - Brazil)
+	that covers a defined area or a selected feature. Only charts that cover
+	the Brazilian territory are able to be determined using this plugin.
+	Charts outside Brasil are grouped together in a separate category.
+
+version=1.0
+author=Diego Benincasa
+icon=icons/main.png
+email=diego@diegobenincasa.com
+; end of mandatory metadata
+
+; start of optional metadata
+
+; experimental flag
+experimental=false
+
+; changelog=false
+
+; tags are in comma separated value format, spaces are allowed
+tags=mapa indice, indice de nomenclatura, mi, index map
+
+; these metadata can be empty
+; in a future version of the web application it will
+; be probably possible to create a project on redmine
+; if they are not filled
+

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/MapFinder/icons" >
+        <file>main.png</file>
+    </qresource>
+</RCC>
