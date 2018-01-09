@@ -21,6 +21,10 @@ version=1.0
 author=Diego Benincasa
 icon=icons/main.png
 email=diego@diegobenincasa.com
+homepage=http://github.com/diegobenincasa
+repository=http://github.com/diegobenincasa/MapFinder
+tracker=http://github.com/diegobenincasa/MapFinder/issues
+
 ; end of mandatory metadata
 
 ; start of optional metadata
