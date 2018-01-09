@@ -6,8 +6,8 @@ from PyQt4.QtGui import QMessageBox, QTreeWidgetItem, QFileDialog
 from qgis.gui import QgsMapToolEmitPoint, QgsVertexMarker
 from qgis.utils import iface
 from qgis.core import QgsCoordinateReferenceSystem, QgsCoordinateTransform, QgsVectorLayer, QgsGeometry, QgsPoint, QgsRectangle, QgsMapLayer
-from ..auxiliar.rectanglemaptool import RectangleMapTool
-from ..auxiliar.geometrymaptool import GeometryMapTool
+from ..auxiliar.rectanglemaptool import RectangleMapTool # @UnresolvedImport
+from ..auxiliar.geometrymaptool import GeometryMapTool # @UnresolvedImport
 import math
 
 GUI, _ = uic.loadUiType(os.path.join(
