@@ -17,7 +17,7 @@ about=
 	the Brazilian territory are able to be determined using this plugin.
 	Charts outside Brasil are grouped together in a separate category.
 
-version=1.0
+version=1.1
 author=Diego Benincasa
 icon=icons/main.png
 email=diego@diegobenincasa.com
@@ -32,7 +32,12 @@ tracker=http://github.com/diegobenincasa/MapFinder/issues
 ; experimental flag
 experimental=false
 
-; changelog=false
+changelog=
+	* v1.1
+		- Correção de pequenos bugs. / Minor bugfixes.
+		
+	* v1.0
+		- Versão inicial de lançamento. / Initial release.
 
 ; tags are in comma separated value format, spaces are allowed
 tags=mapa indice, indice de nomenclatura, mi, index map

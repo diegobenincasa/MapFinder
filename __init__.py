@@ -9,7 +9,7 @@ def description():
     return "Find the topographical chart (nomenclature index and index map - Brazil) that covers a defined area or a selected feature."
 
 def version():
-    return "Version 1.0"
+    return "Version 1.1"
 
 def classFactory(iface):
     return Main(iface)
@@ -25,3 +25,6 @@ def email():
 
 def icon():
     return "icons/main.png"
+
+def about():
+    return "MapFinder Brasil v1.1"

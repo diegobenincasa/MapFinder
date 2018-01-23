@@ -1,4 +1,33 @@
 # -*- coding: UTF-8 -*-
+
+#--------------------------------------------------------------------------#
+#                                                                          #
+# MapFinder Brasil                                                         #
+# Copyright (C) 2018  Diego Benincasa                                      #
+# Contact: diego@diegobenincasa.com                                        #
+# Feel free to contact if you find any bugs or improvement possibilities.  #
+#                                                                          #
+#--------------------------------------------------------------------------#
+#                                                                          #
+# Licensed under the terms of GNU GPL 2                                    #
+#                                                                          #
+# This program is free software; you can redistribute it and/or modify     #
+# it under the terms of the GNU General Public License as published by     #
+# the Free Software Foundation; either version 2 of the License, or        #
+# (at your option) any later version.                                      #
+#                                                                          #
+# This program is distributed in the hope that it will be useful,          #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of           #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the             #
+# GNU General Public License for more details.                             #
+#                                                                          #
+# You should have received a copy of the GNU General Public License along  #
+# with this program; if not, write to the Free Software Foundation, Inc.,  #
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.              #
+#                                                                          #
+#--------------------------------------------------------------------------#
+
+
 import os
 from PyQt4 import QtGui, uic, QtCore
 from PyQt4.QtCore import QSize
@@ -9,6 +38,7 @@ from qgis.core import QgsCoordinateReferenceSystem, QgsCoordinateTransform, QgsV
 from ..auxiliar.rectanglemaptool import RectangleMapTool # @UnresolvedImport
 from ..auxiliar.geometrymaptool import GeometryMapTool # @UnresolvedImport
 import math
+from boto.dynamodb2.exceptions import ItemNotFound
 
 GUI, _ = uic.loadUiType(os.path.join(
     os.path.dirname(__file__), 'window.ui'))
@@ -54,11 +84,13 @@ class Interface(QtGui.QDockWidget, GUI):
             self.auxiliar.openFiles()
             self.geometryButton.setChecked(False)
             self.clearLayersSelections()
+            self.currentTool = self.myToolBox
             self.canvas.setMapTool(self.myToolBox)
             self.canvas.scene().addItem(self.myToolBox.rubberBand)
         else:
             self.auxiliar.closeFiles()
             self.canvas.unsetMapTool(self.myToolBox)
+            self.currentTool = self.canvas.mapTool()
             self.canvas.scene().removeItem(self.myToolBox.rubberBand)
             self.myToolBox.reset()
     
@@ -68,10 +100,12 @@ class Interface(QtGui.QDockWidget, GUI):
             self.auxiliar.openFiles()
             self.boxButton.setChecked(False)
             self.myToolBox.reset()
+            self.currentTool = self.myToolGeom
             self.canvas.setMapTool(self.myToolGeom)
         else:
             self.auxiliar.closeFiles()
             self.canvas.unsetMapTool(self.myToolGeom)
+            self.currentTool = self.canvas.mapTool()
             self.clearLayersSelections()
 
     def clearLayersSelections(self):
@@ -180,10 +214,10 @@ class Interface(QtGui.QDockWidget, GUI):
     def fillListBox(self, f25, f50, f100, f250):
         self.cartasList.clear()
         
-        item25  = QTreeWidgetItem(['1:25.000',''])
-        item50  = QTreeWidgetItem(['1:50.000',''])
-        item100 = QTreeWidgetItem(['1:100.000',''])
-        item250 = QTreeWidgetItem(['1:250.000',''])
+        item25  = QTreeWidgetItem(['1:25.000 (' + str(len(f25)) + ')',''])
+        item50  = QTreeWidgetItem(['1:50.000 (' + str(len(f50)) + ')',''])
+        item100 = QTreeWidgetItem(['1:100.000 (' + str(len(f100)) + ')',''])
+        item250 = QTreeWidgetItem(['1:250.000 (' + str(len(f250)) + ')',''])
         itemNotFound = QTreeWidgetItem([u'Não existentes',''])
         
         self.cartasList.addTopLevelItems([item25, item50, item100, item250, itemNotFound])  
@@ -245,6 +279,9 @@ class Interface(QtGui.QDockWidget, GUI):
         if itemNotFound.childCount() == 0:
             self.cartasList.invisibleRootItem().removeChild(itemNotFound)
         
+        else:
+            itemNotFound.setText(0, itemNotFound.text(0) + ' (' + str(itemNotFound.childCount()) + ')')
+            
         self.cartasList.header().setResizeMode(QtGui.QHeaderView.ResizeToContents)
         
 #        self.cartasList.expandToDepth(0)
